@@ -1,1 +1,1 @@
-# qafm - A package for Quatitative Atomic Force Microscopy
+# qafm - A package for Quantitative Atomic Force Microscopy
