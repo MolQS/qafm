@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "qafm"
+version = "0.1.0"
+description = "Quantitative AFM force models and analysis utilities"
+keywords = ["afm", "atomic force microscopy", "quantitative", "force measurement"]
+readme = "README.md"
+authors = [
+    { name = "Jannik Evers" }, 
+    { name = "Philipp Rahe" }
+]
+dependencies = [
+    "numpy",
+    "scipy",
+]
+requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://github.com/MolQS/qafm/"
+Documentation = "https://app.readthedocs.org/projects/qafm/"
+Repository = "https://github.com/MolQS/qafm/"
+
+[project.optional-dependencies]
+plot = [
+    "matplotlib",
+]
+io = [
+    "h5py",
+]
+dev = [
+    "pytest",
+    "matplotlib",
+    "h5py",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
