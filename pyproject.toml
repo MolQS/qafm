@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "qafm"
-version = "0.1a1"
+version = "0.1a2"
 description = "Quantitative AFM force models and analysis utilities"
 keywords = ["afm", "atomic force microscopy", "quantitative", "force measurement"]
 readme = "README.md"
@@ -14,13 +14,11 @@ authors = [
 ]
 license = "BSD-3-Clause"
 license-files = ["LICENSE"]
+# Note: collections, math, inspect, dataclasses are in core python, 
+# Do not list here
 dependencies = [
     "numpy",
     "scipy",
-    "collections",
-    "math",
-    "inspect",
-    "dataclasses",
 ]
 requires-python = ">=3.10"
 
