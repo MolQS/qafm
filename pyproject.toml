@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "qafm"
-version = "0.1.0"
+version = "0.1a1"
 description = "Quantitative AFM force models and analysis utilities"
 keywords = ["afm", "atomic force microscopy", "quantitative", "force measurement"]
 readme = "README.md"
@@ -20,7 +20,7 @@ requires-python = ">=3.10"
 
 [project.urls]
 Homepage = "https://github.com/MolQS/qafm/"
-Documentation = "https://app.readthedocs.org/projects/qafm/"
+Documentation = "https://qafm.readthedocs.io"
 Repository = "https://github.com/MolQS/qafm/"
 
 [project.optional-dependencies]

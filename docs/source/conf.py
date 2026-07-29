@@ -5,7 +5,11 @@ copyright = "2026, Jannik Evers and Philipp Rahe"
 extensions = [
     "myst_parser",
     "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
 ]
+
+#html_theme = "sphinx_rtd_theme" 
+html_theme = "furo"
 
 # Optional: if you keep any .rst files, both are supported.
 # Otherwise this makes .md the default:
