@@ -5,3 +5,5 @@ This package implements the mathematics for **atomic force microscopy** (AFM) op
 The package provides model force interactions and algorithms to calculate the AFM observables and implements known approaches to recover the interaction force from the measurement observables. 
 
 See the documentation at <https://qafm.readthedocs.io> for further details. 
+
+Licensed under the BSD-3-Clause License — see LICENSE.

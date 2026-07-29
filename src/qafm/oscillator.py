@@ -5,7 +5,16 @@ from dataclasses import dataclass
 from numpy.typing import ArrayLike, NDArray
 from scipy.optimize import curve_fit
 from .numerics.utils import _as_array
-from qafm.parameters import resolve_params
+#from qafm.parameters import resolve_params
+
+
+def resolve_params( model_par, expected_type, default):
+    """This looses the dependency on qafm.parameters.
+    
+    TODO: Update in next release!
+    """
+    return model_par
+
 
 @dataclass(frozen=True)
 class OscillatorParameters:

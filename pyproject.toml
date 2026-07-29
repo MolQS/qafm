@@ -12,9 +12,15 @@ authors = [
     { name = "Jannik Evers" }, 
     { name = "Philipp Rahe" }
 ]
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 dependencies = [
     "numpy",
     "scipy",
+    "collections",
+    "math",
+    "inspect",
+    "dataclasses",
 ]
 requires-python = ">=3.10"
 
