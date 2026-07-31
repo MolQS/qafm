@@ -13,8 +13,9 @@ The package implements the mathematical functions for AFM, separated into [**Int
 
 introduction
 installation
-afm-toolbox
-usage
+interactions-laws
+qafm
+example
 api_reference
 ```
 
