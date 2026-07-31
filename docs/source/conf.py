@@ -14,6 +14,7 @@ extensions = [
 myst_enable_extensions = [
     "dollarmath",
     "amsmath",
+    "html_image",
 ]
 
 #html_theme = "sphinx_rtd_theme" 
