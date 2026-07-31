@@ -300,9 +300,9 @@ An illustration of the different $z$ axes and coordinates is shown in the follow
 
 ## Averaging functions
 
-Within the harmonic approximation, the tip samples the force field along one oscillation path. Therefore, the experimentally accessible quantities are weighted averages over the interval $[z_{\text{c}}-A,z_{\text{c}}+A]$.
+In dynamic atomic force microscopy, the tip does not probe the interaction at a single position. Within the harmonic approximation, the tip samples the force field along one oscillation path during one oscillation cycle. The experimentally accessible quantities are therefore weighted averages over the interval $[z_{\text{c}}-A,z_{\text{c}}+A]$, where $z_c$ is the oscillation-center position and $A_0$ is the oscillation amplitude. The module `qafm.averaging` implements the cup and cap averages used in quantitative AFM.
 
-The cup average is defined as
+The cup average of a quantity  $f^\circ$ is defined as
 
 $$
 \left\langle f^\circ \right\rangle_{\cup}(z_{\text{c}})
@@ -313,7 +313,7 @@ w_{\cup}(z)
 \,\mathrm{d}z,
 $$
 
-with
+with the weighting function
 
 $$
 w_{\cup}(z)
@@ -321,7 +321,7 @@ w_{\cup}(z)
 \frac{1}{\pi\sqrt{A^2-z^2}}.
 $$
 
-The cap average is defined as
+The cup kernel is largest near the turning points $q=\pm A_0$ and is zero outside the open interval $-A_0 < q < A_0$. The kernel is normalized, so the average of a constant function is the same constant. The cap average is defined as
 
 $$
 \left\langle f^\circ \right\rangle_{\cap}(z_{\text{c}})
@@ -341,18 +341,70 @@ w_{\cap}(z)
 \sqrt{A^2-z^2}.
 $$
 
-<table>
-<tr>
-<td><img src="afm-toolbox/example-cup-average-function.png" alt="Cup averaging function for AFM data" /></td>
-<td><img src="afm-toolbox/example-cap-average-function.png" alt="Cap averaging function for AFM data" /></td>
-</tr>
-</table>
+The cap kernel has its maximum at the oscillation center and decreases to zero at both turning points. It is also normalized.
+
+The weighting functions can be accessed via the following functions
+
+- `qafm.averaging.wcup(z_axis, feq, A0, debug=False)` calculates the cup-weighted average.
+- `qafm.averaging.wcap(z_axis, feq, A0, debug=False)` calculates the cap-weighted average.
+- `qafm.averaging.wcup_weighting(z, A)` evaluates the cup kernel.
+- `qafm.averaging.wcap_weighting(z, A)` evaluates the cap kernel.
+
+Both averaging functions return a tuple `(zc, averaged)`. The first array contains the valid oscillation-center positions and the second array contains the corresponding weighted averages.
+
+| Parameter | Description |
+|---|---|
+| `z_axis` | Position axis in metres. For a callable `feq`, these values are interpreted as oscillation-center positions. For array input, they are the positions at which `feq` was sampled. |
+| `feq` | Quantity to average. It must be either a callable or a NumPy array. |
+| `A0` | Oscillation amplitude in metres. A positive value is required for a physically meaningful average. |
+| `debug` | If `True`, prints which averaging implementation was selected. |
+
+*Table: Description of the parameters.*
+
+When calling the weighting functions `wcup` and `wcap` the desired numerical method is selected automatically depending on the input type and the spacing of `z_axis`:
+
+| Input | Selected method | Returned center axis |
+|---|---|---|
+| Callable `feq(z_ts)` | Adaptive integration with `scipy.integrate.quad` | Same size as `z_axis` |
+| NumPy array on an equidistant axis | Numerical integration optimized for uniform sampling | Shorter than `z_axis` |
+| NumPy array on a non-equidistant axis | Numerical integration for irregular sampling | Only positions with a usable averaging interval |
+
+*Table: Numerical methods of caluculating the weighting functions.*
+
+For array input, averages can only be calculated where the full interval $[z_{\text{c}}-A,z_{\text{c}}+A]$, is covered by the sampled data. The returned $z_c$ axis is therefore shorter than the input axis. If an equidistant axis is too short to contain a complete interval of approximately $2 A_0$, the function raises `ValueError`.
+
+`feq` must be a NumPy array rather than a Python list. Use `np.asarray(feq)` before calling the averaging function if necessary. Any other input type raises `TypeError`.
+
+The following **example** calculates the weighting kernals shown in the figure below.
+
+```python
+import numpy as np
+
+A0 = 1.0e-9
+z = np.linspace(-A0, A0, 1_001)
+
+cup_weights = qafm.averaging.wcup_weighting(z, A0)
+cap_weights = qafm.averaging.wcap_weighting(z, A0)
+```
+
+The two functions return arrays with the same shape as $z$. Values outside the open interval $-A_0 < z < A_0$ are set to zero.
+
+
+| cup averaging function | cap averaging function |
+|---|---|
+| ![Cup averaging function for AFM data](afm-toolbox/example-cup-average-function.png) | ![Cap averaging function for AFM data](afm-toolbox/example-cap-average-function.png) |
 
 *Figure: Averaging functions for AFM data.*
 
 <a id="afm-observables-and-solvers"></a>
 
+<a id="afm-observables-and-solvers"></a>
+
 ## AFM Observables and Solvers
+
+```{warning}
+THE WIKI FROM HERE IS NOT FINISHED AND CONTAINS INVALID FUNCTION NAMES!!!
+```
 
 **Quantitative AFM** distinguishes between weighted averages of physical parameters, experimental observables, and sensor parameters:
 
