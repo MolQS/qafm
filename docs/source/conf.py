@@ -6,6 +6,13 @@ extensions = [
     "myst_parser",
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
+    "myst_parser",
+    "sphinx.ext.mathjax",
+]
+
+myst_enable_extensions = [
+    "dollarmath",
+    "amsmath",
 ]
 
 #html_theme = "sphinx_rtd_theme" 
