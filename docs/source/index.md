@@ -27,9 +27,9 @@ The documentation is organized into the following chapters:
 :maxdepth: 2
 :caption: Contents
 
-introduction
 installation
-afm-toolbox
+interactions-laws
+qafm
 usage
 api_reference
 ```
