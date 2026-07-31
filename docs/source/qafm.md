@@ -1,7 +1,5 @@
-
-<a id="afm-theory"></a>
-
-## AFM theory
+# AFM theory
+<!-- <a id="afm-theory"></a> -->
 
 In an AFM experiment, the tip is attached to a mechanical resonator, such as a cantilever, tuning fork, or length-extension sensor. The resonator is modeled as a harmonic oscillator with effective mass $m$, spring constant $k$, and damping constant $\gamma$. Equivalently, it can be characterized by $k$, its eigenfrequency
 
