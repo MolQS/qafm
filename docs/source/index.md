@@ -10,6 +10,17 @@ The **AFM Toolbox** provides the mathematical and numerical tools needed for thi
 
 ## Wiki overview
 
+```{toctree}
+:maxdepth: 2
+:caption: Contents
+
+installation
+interactions-laws
+qafm
+example
+api_reference
+```
+
 The documentation is organized into the following chapters:
 
 - [Interaction Laws](#interaction-laws) introduces analytical force and force-gradient models, predefined interaction combinations, and the flexible construction of combined force models.
@@ -23,13 +34,43 @@ The documentation is organized into the following chapters:
 
 ## Package overview
 
-```{toctree}
-:maxdepth: 2
-:caption: Contents
+The package should be used via:
 
-installation
-interactions-laws
-qafm
-usage
-api_reference
+```python
+import qafm
 ```
+
+The `qafm` package is structured as visualized below
+
+```text
+qafm/
+├── __init__.py
+├── averaging.py
+├── oscillator.py
+├── parameters.py
+│
+├── config/
+│   ├── __init__.py
+│   └── defaultParameterSet.py
+│
+├── fm/
+│   ├── __init__.py
+│   ├── conversions.py
+│   ├── inversion.py
+│   └── observables.py 
+│
+├── interactions/
+│   ├── __init__.py
+│   ├── chemical.py
+│   ├── combined.py
+│   ├── custom.py
+│   ├── electrostatic.py
+│   └── vdw.py
+│
+└── numerics/
+    ├── __init__.py
+    ├── differentiation.py
+    ├── filters.py
+    └── utils.py
+```
+
