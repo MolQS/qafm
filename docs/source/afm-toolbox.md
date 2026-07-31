@@ -88,7 +88,7 @@ forces = {
         qafm.interactions.vdw.spherical_cap_cone_geometric_force(z_ts, params),
 }
 ```
-
+![Layout of the AFM toolbox](afm-toolbox/example-force-chemical.png)
 <table>
 <tr>
 <td><img src="afm-toolbox/example-force-chemical.png" alt="Example interaction force: chemical interaction" /></td>
