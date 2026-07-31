@@ -96,6 +96,25 @@ forces = {
 </tr>
 </table>
 
+::::{grid} 2
+:gutter: 2
+
+:::{grid-item}
+```{image} afm-toolbox/example-force-chemical.png
+:alt: Example interaction force: chemical interaction
+:width: 100%
+```
+:::
+
+:::{grid-item}
+```{image} afm-toolbox/example-force-vdW.png
+:alt: Example interaction force: van der Waals interaction
+:width: 100%
+```
+:::
+
+::::
+
 *Figure: Examples of individual chemical and van der Waals interaction forces.*
 
 ### Custom Forces
