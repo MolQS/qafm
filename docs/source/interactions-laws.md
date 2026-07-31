@@ -70,18 +70,11 @@ forces = {
 }
 ```
 
-<table>
-<tr>
-<td><img src="afm-toolbox/example-force-chemical.png" alt="Example interaction force: chemical interaction" /></td>
-<td><img src="afm-toolbox/example-force-vdW.png" alt="Example interaction force: van der Waals interaction" /></td>
-</tr>
-</table>
-
-*Figure: Examples of individual chemical and van der Waals interaction forces.*
-
 | Chemical interaction | van der Waals interaction |
 |---|---|
 | ![Chemical interaction](afm-toolbox/example-force-chemical.png) | ![van der Waals interaction](afm-toolbox/example-force-vdW.png) |
+
+*Figure: Examples of individual chemical and van der Waals interaction forces.*
 
 ### Custom Forces
 
@@ -112,12 +105,9 @@ c2_gradient = morse_vdw_cone_sphere_forcegradient(
 )
 ```
 
-<table>
-<tr>
-<td><img src="afm-toolbox/example-force-custom-1.png" alt="Example interaction force: custom model 1" /></td>
-<td><img src="afm-toolbox/example-force-custom-2.png" alt="Example interaction force: custom model 2" /></td>
-</tr>
-</table>
+| force | gradient |
+|---|---|
+| ![Example interaction force: custom model 1](afm-toolbox/example-force-custom-1.png) | ![Example interaction force: custom model 2](afm-toolbox/example-force-custom-2.png) |
 
 *Figure: Predefined custom force models combining chemical and van der Waals interactions.*
 
