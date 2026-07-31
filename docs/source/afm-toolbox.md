@@ -115,6 +115,10 @@ forces = {
 
 ::::
 
+| Chemical interaction | van der Waals interaction |
+|---|---|
+| ![Chemical interaction](afm-toolbox/example-force-chemical.png) | ![van der Waals interaction](afm-toolbox/example-force-vdW.png) |
+
 *Figure: Examples of individual chemical and van der Waals interaction forces.*
 
 ### Custom Forces
