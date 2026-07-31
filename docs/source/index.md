@@ -13,6 +13,7 @@ The package implements the mathematical functions for AFM, separated into [**Int
 
 introduction
 installation
+afm-toolbox
 usage
 api_reference
 ```
