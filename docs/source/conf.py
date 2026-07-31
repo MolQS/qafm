@@ -8,6 +8,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "myst_parser",
     "sphinx.ext.mathjax",
+    "sphinx_design",
 ]
 
 myst_enable_extensions = [
