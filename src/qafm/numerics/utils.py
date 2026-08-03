@@ -1,4 +1,4 @@
-# src/qafm/numerics/utils.py
+# src/qafm/quant/utils.py
 
 import inspect
 
