@@ -21,7 +21,6 @@ from .inversion import (
     Feven_deconv,
     Ueven_deconv,
     Feven_matrix_deconv,
-    Feven_qs_deconv,
     df_to_force,
 )
 
@@ -42,6 +41,5 @@ __all__ = [
     "Feven_deconv",
     "Ueven_deconv",
     "Feven_matrix_deconv",
-    "Feven_qs_deconv",
     "df_to_force",
 ]

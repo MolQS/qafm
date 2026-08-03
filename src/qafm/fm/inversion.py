@@ -365,125 +365,12 @@ def Feven_matrix_deconv(
     return zFeven, Feven
 
 
-
-@staticmethod
-def Feven_qs_deconv(zk, kts_cap, A0, k0, sg_winSize, sg_degree, tozero, maxIter=10):
-    ''' Implements force deconvolution with considering the static deflection
-
-        iterative solution with adjusting the z axis. 
-    
-    '''
-    from matplotlib import pyplot as plt
-    import scipy.constants as pc
-
-    print("WARNING: This function is still work in progress")
-
-    zp = zk
-    # We initially estimate zc to be zp
-    zc = zp
-    qs = zk * 0.0
-    z0 = 0.0
-
-    dz = np.mean(np.diff(zk))
-    i=0
-
-    # # Live plot updates - DEBUGGING ONLY
-    # plt.ion()
-    # fig, axes = plt.subplots(1, 3, figsize=(10, 4))
-    # fig.suptitle('Feven_qs_deconv — iterative convergence')
-
-    # axes[0].set_xlabel('z (nm)')
-    # axes[0].set_ylabel('F (nN)')
-    # axes[0].set_title('Even force')
-
-    # axes[1].set_xlabel('z (nm)')
-    # axes[1].set_ylabel('q_s (pm)')
-    # axes[1].set_title('static deflection')
-
-    # axes[2].set_xlabel('Iteration')
-    # axes[2].set_ylabel('RMS error (nN)')
-    # axes[2].set_title('Convergence')
-
-    # cmap = plt.get_cmap('viridis')
-    tolerr_history = []
-
-    while(1):
-        print(f' -iter {i}/{maxIter}...')
-        if(i>=maxIter):
-            print('maximum number of iterations reached.')
-            break
-
-        i = i+1
-
-        # 1) Use deconvolution to get Feven
-        z_Feveni, Feveni = Feven_deconv(zc, kts_cap, A0, sg_winSize, sg_degree, tozero)
-
-        # 2) calculate cup average to get q_s
-        N_A = int(round(A0 / dz)) + 1
-        # Pad with boundary values to get array of same length
-        Feveni_padded = np.pad(Feveni, N_A, mode='edge')
-        dz_lo = z_Feveni[1] - z_Feveni[0]
-        dz_hi = z_Feveni[-1] - z_Feveni[-2]
-        z_padded = np.concatenate([
-            z_Feveni[0] + np.arange(-N_A, 0) * dz_lo,
-            z_Feveni,
-            z_Feveni[-1] + np.arange(1, N_A + 1) * dz_hi
-        ])
-        print(f"{Feveni_padded.shape=}")
-        print(f"{z_padded.shape=}")
-        #plt.plot(z_Feveni, Feveni, 'or', label='orig')
-        #plt.plot(z_padded, Feveni_padded, '.-g', label='padded')
-        #zc_wcup, Fevencup = q_afm.wcup(z_Feveni, Feveni, A0)
-        zc_wcup, Fevencup = wcup(z_padded, Feveni_padded, A0)
-        if Fevencup.shape[0] > qs.shape[0]:
-            Fevencup = Fevencup[0:qs.shape[0]]
-            zc_wcup = zc_wcup[0:qs.shape[0]]
-        elif Fevencup.shape[0] < qs.shape[0]:
-            print("Warning: Fevencup has less points than qs")
-
-        print(f"{Feveni.shape=} ; {Fevencup.shape=} ; {qs.shape=}")
-
-        #     ... deviation to the round before
-        tolerrqs = np.sqrt( np.mean( np.pow(Fevencup/k0 - qs,2) ) )
-
-        #     ... static deflection
-        qs = Fevencup/k0
-
-        #     ... and re-define the z axis for centre position z_c
-        zc = z0 + zp + qs # Zc # z_p[:len(qs)] + qs
-
-
-
-        # --- add new curves for this iteration ---
-        # color = cmap(i / max(maxIter, 1))
-        tolerr_history.append(tolerrqs / pc.nano)
-
-        # axes[0].plot(z_Feveni / pc.nano, Feveni / pc.nano, '.-', color=color, label=f'iter {i}')
-        # axes[0].relim()
-        # axes[0].autoscale_view()
-        # axes[0].legend()
-
-        # axes[1].plot(zc_wcup / pc.nano, qs / pc.pico, '.-', color=color, label=f'iter {i}')
-        # axes[1].relim()
-        # axes[1].autoscale_view()
-        # axes[1].legend()
-
-        # axes[2].plot(range(len(tolerr_history)), tolerr_history, 'o-', color='k')
-        # axes[2].relim()
-        # axes[2].autoscale_view()
-
-        # fig.canvas.draw()
-        # plt.pause(0.05)
-
-    return z_Feveni, Feveni, qs
-
-
 def df_to_force(
     z: ArrayLike,
     df: ArrayLike,
     sensor: OscillatorParameters = OscillatorParameters(),
     *,
-    algorithm: Literal["sj", "matrix", "qs"] = "sj",
+    algorithm: Literal["sj", "matrix"] = "sj",
     sgwin: int = 51,
     sgdegree: int = 3,
     tozero: int | bool = False,
@@ -511,7 +398,6 @@ def df_to_force(
         Selects between 
         'sj' : Sader/Jarvis via Feven_deconv
         'matrix' : Matrix method via Feven_matrix_deconv
-        'qs'   : including ``qs`` determination via Feven_qs_deconv
     sgwin:
         Savitzky-Golay filter window length passed to `Feven_deconv`.
     sgdegree:
@@ -537,12 +423,12 @@ def df_to_force(
         )
 
     # check for valid algorithm value
-    algorithms = {"sj", "matrix", "qs"}
+    algorithms = {"sj", "matrix"}
 
     if algorithm not in algorithms:
         raise ValueError(
             f"Unknown algorithm {algorithm!r}. "
-            "Expected 'sj', 'matrix', or 'qs'."
+            "Expected 'sj', 'matrix'."
         )
 
     ktsevencap = df_to_ktscap(df, sensor)
@@ -564,19 +450,9 @@ def df_to_force(
             A0=sensor.A0,
             tozero=tozero,
         )
-    elif algorithm == 'qs':
-        zFeven, Feven = Feven_qs_deconv(
-            zk=z, 
-            kts_cap=ktsevencap, 
-            A0=sensor.A0, 
-            k0=sensor.k0, 
-            sg_winSize=sgwin, 
-            sg_degree=sgdegree, 
-            tozero=tozero
-        )
     else:
         raise ValueError(
-                    f"Algorithm {algorithm} is unknown. Select from ['sj', 'matrix', 'qs']."
+                    f"Algorithm {algorithm} is unknown. Select from ['sj', 'matrix']."
                 )
 
     return zFeven, Feven
