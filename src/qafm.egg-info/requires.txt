@@ -1,0 +1,13 @@
+numpy>=1.21
+scipy>=1.8
+
+[dev]
+pytest
+matplotlib
+h5py
+
+[io]
+h5py
+
+[plot]
+matplotlib
