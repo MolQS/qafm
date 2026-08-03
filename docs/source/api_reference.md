@@ -1,29 +1,16 @@
 # API Reference
 
 
-## oscillator
 
-```{eval-rst}
-.. automodule:: qafm.oscillator
-   :members:
-   :undoc-members:
-   :show-inheritance:
+```{toctree}
+:maxdepth: 2
+
+api/interactions
+api/oscillator
+api/averaging
+api/fm
+api/parameters
+api/numerics
+api/config
 ```
 
-## averaging
-
-```{eval-rst}
-.. automodule:: qafm.averaging
-   :members:
-   :undoc-members:
-   :show-inheritance:
-```
-
-## numerics
-
-```{eval-rst}
-.. automodule:: qafm.numerics
-   :members:
-   :undoc-members:
-   :show-inheritance:
-```
