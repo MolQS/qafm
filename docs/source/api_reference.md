@@ -1,5 +1,6 @@
 # API Reference
 
+Outline of the qafm package: 
 
 
 ```{toctree}

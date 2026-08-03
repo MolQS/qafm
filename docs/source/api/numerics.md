@@ -1,5 +1,7 @@
 # numerics
 
+This module provides different numerical algorithms and utility functions that are relevant for quantitative atomic force microscopy. 
+
 ## filters
 
 ```{eval-rst}
